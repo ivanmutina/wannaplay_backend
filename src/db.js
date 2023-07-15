@@ -1,30 +1,28 @@
-import mongo from "mongodb";
+import { MongoClient } from "mongodb";
 
-let connection_string = "mongodb+srv://admin:admin@im-cluster.8fhrzmp.mongodb.net/?retryWrites=true&w=majority";
+// let connection_string = "mongodb+srv://admin:admin@im-cluster.8fhrzmp.mongodb.net/?retryWrites=true&w=majority";
+let connection_string = "mongodb://127.0.0.1:27017/fipugram";
 
 // objekt koji sluzi za pristup
-let client = new mongo.MongoClient(connection_string, {
+let client = new MongoClient(connection_string, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
+// da se ne spaja svaki put
 let db = null;
 
-export default () => {
-  return new Promise((resolve, reject) => {
-    // provjeri jel baza vec spojena
-    if (db && client.isConnected()) {
-      resolve(db);
-    }
-    // ako se prvi put spaja
-    client.connect((err) => {
-      if (err) {
-        reject("Došlo je do greške prilikom spajanja!" + err);
-      } else {
-        console.log("Uspješno spajanje na bazu.");
-        let db = client.db("testbaza");
-        resolve(db);
-      }
-    });
-  });
-};
+export default async function connect() {
+  if (db && client.isConnected) {
+    return db;
+  }
+
+  try {
+    await client.connect();
+    db = client.db("fipugram");
+    console.log("Uspješno spajanje na bazu.");
+    return db;
+  } catch (error) {
+    throw new Error("Došlo je do greške prilikom spajanja na bazu: " + error);
+  }
+}
