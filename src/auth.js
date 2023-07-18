@@ -56,6 +56,29 @@ export default {
       throw new Error("Can not authenticate!");
     }
   },
+  // promjena sifre
+  async changeUserPassword(username, old_password, new_password) {
+    let db = await connect();
+    // pronađi dal taj username postoji u bazi
+    let user = await db.collection("users").findOne({ username: username });
+
+    // provjeri i jeli stara sifra kao ona sto je u bazi
+    if (user && user.password && (await bcrypt.compare(old_password, user.password))) {
+      let new_password_hashed = await bcrypt.hash(new_password, 8);
+
+      // updejtaj sifru u Mongu
+      let result = await db.collection("users").updateOne(
+        { _id: user._id },
+        {
+          $set: {
+            password: new_password_hashed,
+          },
+        }
+      );
+      return result.modifiedCount == 1;
+    }
+  },
+  // middleware funkcija
   verify(req, res, next) {
     // provjeri token
     try {
