@@ -1,4 +1,3 @@
-import mongo from "mongodb";
 import connect from "./db";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";

@@ -8,6 +8,13 @@ const port = 3000; // port na kojem će web server slušati
 
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static("uploads")); // staticne datoteke
+
+// prefix ruta
+app.use("/api/post", require("../routes/routes"));
+
+// ---------- //
 
 app.get("/tajna", [auth.verify], (req, res) => {
   res.json({ message: "Ovo je tajna " + req.jwt.username });
@@ -58,8 +65,9 @@ app.post("/user", async (req, res) => {
 });
 
 // za koju rutu, trazimo dva objekta, i unutra ide sta se sve ima za izvrsit
-app.get("/", [auth.verify], (req, res) => {
-  res.json({ status: "Radi :)" });
-});
+//app.get("/", [auth.verify], (req, res) => {
+//  res.json({ status: "Radi :)" });
+// });
 
-app.listen(port, () => console.log(`Slušam na portu ${port}!`));
+// start server
+app.listen(port, () => console.log(`Listening on http://localhost:${port}`));
