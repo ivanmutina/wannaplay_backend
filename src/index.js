@@ -14,12 +14,6 @@ app.use(express.static("uploads")); // staticne datoteke
 // prefix ruta
 app.use("/api/post", require("../routes/routes"));
 
-// ---------- //
-
-app.get("/tajna", [auth.verify], (req, res) => {
-  res.json({ message: "Ovo je tajna " + req.jwt.username });
-});
-
 // autentifikacija korisnika
 app.post("/auth", async (req, res) => {
   let user = req.body;
@@ -35,7 +29,6 @@ app.post("/auth", async (req, res) => {
 // promjena sifre
 app.patch("/user", [auth.verify], async (req, res) => {
   let changes = req.body;
-
   let username = req.jwt.username;
 
   if (changes.new_password && changes.old_password) {
@@ -50,10 +43,10 @@ app.patch("/user", [auth.verify], async (req, res) => {
   }
 });
 
+// registracija
 app.post("/user", async (req, res) => {
   let user = req.body;
 
-  // registracija
   let id;
   try {
     id = await auth.registerUser(user);
@@ -63,11 +56,6 @@ app.post("/user", async (req, res) => {
 
   res.json({ id: id });
 });
-
-// za koju rutu, trazimo dva objekta, i unutra ide sta se sve ima za izvrsit
-//app.get("/", [auth.verify], (req, res) => {
-//  res.json({ status: "Radi :)" });
-// });
 
 // start server
 app.listen(port, () => console.log(`Listening on http://localhost:${port}`));

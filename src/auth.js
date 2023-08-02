@@ -34,7 +34,6 @@ export default {
   // autentifikacija korisnika
   async authenticateUser(username, password) {
     let db = await connect();
-
     // trazi korisnika
     let user = await db.collection("users").findOne({ username: username });
 
@@ -58,7 +57,7 @@ export default {
   // promjena sifre
   async changeUserPassword(username, old_password, new_password) {
     let db = await connect();
-    // pronađi dal taj username postoji u bazi
+    // pronađi postoji li taj username u bazi
     let user = await db.collection("users").findOne({ username: username });
 
     // provjeri i jeli stara sifra kao ona sto je u bazi
@@ -75,6 +74,17 @@ export default {
         }
       );
       return result.modifiedCount == 1;
+    }
+  },
+  async deleteUser(username) {
+    let db = await connect();
+    let user = await db.collection("users").findOne({ username: username });
+
+    if (user) {
+      let result = await db.collection("users").deleteOne({ _id: user._id });
+      return result.deletedCount == 1;
+    } else {
+      return false;
     }
   },
   // middleware funkcija

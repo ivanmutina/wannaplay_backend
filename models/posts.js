@@ -2,9 +2,13 @@ import mongoose from "mongoose";
 
 const postSchema = mongoose.Schema({
   title: String,
-  category: String,
-  content: String,
-  image: String,
+  date: String,
+  time: String,
+  place: String,
+  players: Number,
+  gender: String,
+  contact: Number,
+  description: String,
   created: {
     type: Date,
     default: Date.now,
