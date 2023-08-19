@@ -57,5 +57,21 @@ app.post("/user", async (req, res) => {
   res.json({ id: id });
 });
 
+// brisanje profila
+app.delete("/user/:username", [auth.verify], async (req, res) => {
+  let username = req.params.username; // Uzimamo username iz URL parametra
+
+  try {
+    let result = await auth.deleteUser(username);
+    if (result) {
+      res.json({ success: true });
+    } else {
+      res.status(500).json({ error: "Failed to delete account." });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Failed to delete account." });
+  }
+});
+
 // start server
 app.listen(port, () => console.log(`Listening on http://localhost:${port}`));
