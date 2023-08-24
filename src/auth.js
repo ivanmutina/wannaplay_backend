@@ -51,7 +51,7 @@ export default {
         username: user.username,
       };
     } else {
-      throw new Error("Can not authenticate!");
+      return null;
     }
   },
   // promjena sifre
