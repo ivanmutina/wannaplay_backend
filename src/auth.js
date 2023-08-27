@@ -26,7 +26,7 @@ export default {
       }
     } catch (e) {
       if (e.code == 11000) {
-        throw new Error("Korisnik već postoji");
+        throw new Error("User already exists");
       }
     }
   },

@@ -1,13 +1,13 @@
 import mongoose from "mongoose";
 
-// let connection_string = "mongodb+srv://admin:admin@im-cluster.8fhrzmp.mongodb.net/?retryWrites=true&w=majority";
-let connection_string = "mongodb://127.0.0.1:27017/fipugram";
+let connection_string = "mongodb+srv://ivan:nVOVPf23purH6WHO@wannaplay.jubbxd7.mongodb.net/?retryWrites=true&w=majority";
+// let connection_string = "mongodb://127.0.0.1:27017/wannaPlay";
 
 // da se ne spaja svaki put
 let db = null;
 
 export default async function connect() {
-  // Provjera pomoću Mongoose-a je li veza uspostavljena
+  // provjera pomoću Mongoose-a je li veza uspostavljena
   if (db && mongoose.connection.readyState === 1) {
     return db;
   }

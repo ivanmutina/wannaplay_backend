@@ -9,7 +9,6 @@ const port = 3000; // port na kojem će web server slušati
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static("uploads")); // staticne datoteke
 
 // prefix ruta
 app.use("/api/post", require("../routes/routes"));
