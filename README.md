@@ -12,5 +12,3 @@ WannaPlay je aplikacija za pronalazak termina i igrača za rekreativno igranje s
 ## Javni link
 
 Web:
-
-## Prototip

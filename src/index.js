@@ -25,6 +25,20 @@ app.post("/auth", async (req, res) => {
   }
 });
 
+// registracija
+app.post("/user", async (req, res) => {
+  let user = req.body;
+
+  let id;
+  try {
+    id = await auth.registerUser(user);
+  } catch (e) {
+    return res.status(500).json({ error: e.message });
+  }
+
+  res.json({ id: id });
+});
+
 // promjena sifre
 app.patch("/user", [auth.verify], async (req, res) => {
   let changes = req.body;
@@ -40,20 +54,6 @@ app.patch("/user", [auth.verify], async (req, res) => {
   } else {
     res.status(400).json({ error: "Wrong request!" });
   }
-});
-
-// registracija
-app.post("/user", async (req, res) => {
-  let user = req.body;
-
-  let id;
-  try {
-    id = await auth.registerUser(user);
-  } catch (e) {
-    return res.status(500).json({ error: e.message });
-  }
-
-  res.json({ id: id });
 });
 
 // brisanje profila

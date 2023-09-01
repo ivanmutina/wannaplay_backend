@@ -24,10 +24,8 @@ export default {
       if (result && result.insertedId) {
         return result.insertedId;
       }
-    } catch (e) {
-      if (e.code == 11000) {
-        throw new Error("User already exists");
-      }
+    } catch (err) {
+      throw new err();
     }
   },
 
@@ -51,7 +49,7 @@ export default {
         username: user.username,
       };
     } else {
-      return null;
+      throw new err();
     }
   },
   // promjena sifre
@@ -76,6 +74,7 @@ export default {
       return result.modifiedCount == 1;
     }
   },
+  // brisanje korisnika
   async deleteUser(username) {
     let db = await connect();
     let user = await db.collection("users").findOne({ username: username });
