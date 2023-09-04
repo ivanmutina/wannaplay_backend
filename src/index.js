@@ -4,7 +4,7 @@ import cors from "cors";
 import auth from "./auth";
 
 const app = express();
-const port = 3000; // port na kojem će web server slušati
+const port = 3000;
 
 app.use(cors());
 app.use(express.json());
@@ -58,7 +58,7 @@ app.patch("/user", [auth.verify], async (req, res) => {
 
 // brisanje profila
 app.delete("/user/:username", [auth.verify], async (req, res) => {
-  let username = req.params.username; // Uzimamo username iz URL parametra
+  let username = req.params.username; // uzimamo username iz URL parametra
 
   try {
     let result = await auth.deleteUser(username);
